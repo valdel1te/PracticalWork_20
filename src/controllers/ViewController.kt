@@ -7,8 +7,8 @@ import model.University
 import java.awt.event.ActionListener
 
 class ViewController(
-        private val university: University,
-        private val view: View
+    private val university: University,
+    private val view: View
 ) {
     init {
         fillComboBoxes()
@@ -25,7 +25,7 @@ class ViewController(
     }
 
     fun addReadyStudent(student: Student) =
-            university.distribute(student)
+        university.distribute(student)
 
     private fun addStudent() = ActionListener {
         if (view.nameField.text.trim() == "" || view.surnameField.text.trim() == "") {
@@ -33,10 +33,10 @@ class ViewController(
             return@ActionListener
         }
         val newStudent = Student(
-                view.nameField.text,
-                view.surnameField.text,
-                view.courseChoice.selectedItem as Int,
-                view.facultyChoice.selectedItem as FacultyName
+            view.nameField.text,
+            view.surnameField.text,
+            view.courseChoice.selectedItem as Int,
+            view.facultyChoice.selectedItem as FacultyName
         )
         university.distribute(newStudent)
         view.textInfo.text += "----- Студент \"${newStudent.name} ${newStudent.surname}\" добавлен -----\n"
@@ -46,16 +46,18 @@ class ViewController(
 
     private fun removeStudent() = ActionListener {
         val student = Student(
-                view.nameField.text,
-                view.surnameField.text,
-                view.courseChoice.selectedItem as Int,
-                view.facultyChoice.selectedItem as FacultyName
+            view.nameField.text,
+            view.surnameField.text,
+            view.courseChoice.selectedItem as Int,
+            view.facultyChoice.selectedItem as FacultyName
         )
         view.textInfo.text += "----- Проводится поиск указанного студента -----\n"
         if (university.studentIsExist(student)) {
             university.removeStudent(student)
             view.textInfo.text += "----- Студент \"${student.name} ${student.surname}\" удален -----\n"
-        } else view.textInfo.text += "----- Студент не найден -----\n"
+        } else
+            view.textInfo.text += "----- Студент не найден -----\n"
+
         clearValues()
     }
 
