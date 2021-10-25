@@ -18,6 +18,7 @@ class ViewController(
 
     private fun fillComboBoxes() {
         (1..4).forEach { view.courseChoice.addItem(it) }
+
         FacultyName.values().forEach {
             view.facultyChoice.addItem(it)
         }

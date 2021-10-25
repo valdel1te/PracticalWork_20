@@ -2,42 +2,34 @@ package model
 
 class Faculty(val facultyName: String) {
 
-    val groups: MutableList<Group> = mutableListOf() // пустой
+    val groups: MutableList<Group> = mutableListOf()
 
     fun addGroup(group: Group) =
-            groups.add(group)
+        groups.add(group)
 
     fun removeGroup(group: Group) =
-            groups.remove(group)
-
+        groups.remove(group)
 
     fun clearList() {
         groups.clear()
     }
 
-    private fun findGroup(student: Student) : Group? =
-            groups.find { it.groupName.equals("${student.faculty.facultyName.toUpperCase()[0]}-${student.course}") }
+    fun findGroup(student: Student): Group? =
+        groups.find { it.groupName.equals("${student.faculty.facultyName.toUpperCase()[0]}-${student.course}") }
 
-    private fun groupIsExists(student: Student) : Boolean =
-            findGroup(student) != null
+    private fun groupIsExists(student: Student): Boolean =
+        findGroup(student) != null
 
     fun distribute(student: Student) {
         if (!groupIsExists(student))
-            groups.add(Group(mutableListOf(student), facultyName, student.course))
+            addGroup(Group(mutableListOf(student), facultyName, student.course))
         else
             findGroup(student)!!.addStudent(student)
     }
 
-    fun removeStudent(student: Student) =
-        findGroup(student)!!.removeStudent(student)
+    fun findStudent(student: Student): Student? =
+        findGroup(student)?.findStudent(student)
 
-    fun findStudent(student: Student) : Boolean {
-        val search = groups.find { it.groupName.equals(findGroup(student)) }
-        return if (search != null) {
-            Group(search.students, student.faculty.facultyName, student.course).findStudent(student)
-            true
-        } else false
-    }
 
     override fun toString(): String {
         val sb = StringBuilder("  Факультет -> $facultyName:\n")
@@ -46,10 +38,4 @@ class Faculty(val facultyName: String) {
         }
         return sb.toString()
     }
-//    fun printFaculties() {
-//        println("\tФакультет -> $facultyName:")
-//        groups.forEach {
-//            it.printGroup()
-//        }
-//    }
 }

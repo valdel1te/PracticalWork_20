@@ -12,15 +12,15 @@ class Group(
     fun addStudent(student: Student) =
             students.add(student)
 
-    fun removeStudent(student: Student) =
-            students.remove(student)
+    fun removeStudent(student: Student) {
+        students.remove(findStudent(student))
+    }
 
     fun clearList() =
             students.clear()
 
-    fun findStudent(student: Student) : Boolean {
-        val search = students.find { it.equals(student.name) && it.equals(student.surname) }
-        return search != null
+    fun findStudent(student: Student): Student? {
+        return students.find { it.name == student.name && it.surname == student.surname }
     }
 
     override fun toString(): String {
@@ -30,10 +30,6 @@ class Group(
         }
         return sb.toString()
     }
-
-//    fun printGroup() {
-//        println("\t\tГруппа -> $groupName:")
-//        students.forEach(::println)
-//    }
 }
+
 

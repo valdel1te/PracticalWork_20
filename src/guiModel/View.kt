@@ -29,7 +29,6 @@ class View {
         textInfo.apply {
             isVisible = true
             isEditable = false
-            // поменять шрифт на убунту и поднять размер
             setSize(440, 540)
             setLocation(10, 10)
         }

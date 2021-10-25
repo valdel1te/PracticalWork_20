@@ -7,5 +7,5 @@ class Student(name: String, surname: String, course: Int, faculty: FacultyName) 
     val faculty = faculty
 
     override fun toString(): String =
-            "      Студент($name $surname, $course курс, ${faculty.facultyName})"
+        "      Студент($name $surname, $course курс, ${faculty.facultyName})"
 }

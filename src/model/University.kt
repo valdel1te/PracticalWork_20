@@ -9,31 +9,21 @@ class University(name: String) {
     private val facultyList: List<Faculty> = FacultyName.values().map { Faculty(it.facultyName) }
 
     fun distribute(student: Student) =
-            facultyList.find { it.facultyName.equals(student.faculty.facultyName) }!!.distribute(student)
+        findFaculty(student.faculty.facultyName)!!.distribute(student)
 
-    fun removeStudent(student: Student) {
-        val f = facultyList.find {
-            it.facultyName.equals(student.faculty.facultyName)
-        }!!.groups.find {
-            it.groupName.equals("${student.faculty.facultyName.toUpperCase()[0]}-${student.course}")
-        }//!!.removeStudent(student)
-        f!!.students.remove(student)
-        println(f)
-        println(student)
+    fun removeStudent(student: Student) =
+        findFaculty(student.faculty.facultyName)!!.findGroup(student)!!.removeStudent(student)
+
+    private fun findFaculty(fname: String): Faculty? {
+        return facultyList.find { it.facultyName == fname }
     }
 
-    private fun findStudent(student: Student) : Boolean {
-        val search = facultyList.find { it.facultyName.equals(student.faculty.facultyName) }
-        return if (search != null) {
-            Faculty(student.faculty.facultyName).findStudent(student)
-            true
-        } else false
-    }
+    private fun findStudent(student: Student): Student? =
+        facultyList.find { it.facultyName.equals(student.faculty.facultyName) }?.findStudent(student)
 
-    fun studentIsExist(student: Student) : Boolean {
-        val studentFaculty = Faculty(student.faculty.facultyName)
-        //val studentGroup = Group(, student.faculty.facultyName, student.course)
-        return findStudent(student) && studentFaculty.findStudent(student)
+
+    fun studentIsExist(student: Student): Boolean {
+        return findStudent(student) != null
     }
 
     override fun toString(): String {
@@ -43,8 +33,4 @@ class University(name: String) {
         }
         return sb.toString()
     }
-//    fun printAllStudents() {
-//        println("Институт -> $name:")
-//        facultyList.forEach { it.printFaculties() }
-//    }
 }
